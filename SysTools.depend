@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1481151616 source:d:\systools\evalintroprog\src\pathop.cpp
+	"pathop.h"
+
+1481153015 d:\systools\evalintroprog\include\pathop.h
+	<stdio.h>
+	<direct.h>
+	<unistd.h>
+
+1481152918 source:d:\systools\evalintroprog\main.cpp
+	<iostream>
+	<pathop.h>
+
