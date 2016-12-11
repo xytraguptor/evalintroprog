@@ -34,10 +34,31 @@
        <enum>QFrame::Plain</enum>
       </property>
       <property name="selectionMode">
-       <enum>QAbstractItemView::MultiSelection</enum>
+       <enum>QAbstractItemView::ExtendedSelection</enum>
+      </property>
+      <property name="textElideMode">
+       <enum>Qt::ElideNone</enum>
+      </property>
+      <property name="isWrapping" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="resizeMode">
+       <enum>QListView::Adjust</enum>
+      </property>
+      <property name="layoutMode">
+       <enum>QListView::SinglePass</enum>
+      </property>
+      <property name="spacing">
+       <number>5</number>
       </property>
       <property name="viewMode">
        <enum>QListView::IconMode</enum>
+      </property>
+      <property name="uniformItemSizes">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -51,6 +72,16 @@
      <width>755</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(51, 51, 51);
+color: rgb(234, 234, 234);</string>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -81,6 +112,9 @@
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
    <property name="layoutDirection">
     <enum>Qt::RightToLeft</enum>
    </property>
@@ -89,6 +123,8 @@
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(51, 51, 51);
+border-bottom-color: rgb(0, 0, 0);
+border-color: rgb(0, 170, 255);
 color: rgb(238, 238, 238);</string>
    </property>
    <property name="movable">
@@ -209,9 +245,20 @@ image: url(:/ico/Resources/magnifier16.png);
    </property>
    <property name="minimumSize">
     <size>
-     <width>56</width>
+     <width>89</width>
      <height>200</height>
     </size>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+border-bottom-color: rgb(85, 255, 127);
+border-top-color: rgb(0, 85, 255);
+gridline-color: rgb(255, 170, 255);
+border-top-color: rgb(255, 170, 127);
+alternate-background-color: rgb(255, 255, 127);</string>
    </property>
    <property name="features">
     <set>QDockWidget::DockWidgetClosable</set>
@@ -225,9 +272,26 @@ image: url(:/ico/Resources/magnifier16.png);
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_12"/>
+   <widget class="QWidget" name="dockWidgetContents_12">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QTextEdit" name="textEdit">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <action name="action_Search">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/ico/Resources/wmagnifier16.png</normaloff>:/ico/Resources/wmagnifier16.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Search</string>
    </property>
@@ -276,6 +340,9 @@ image: url(:/ico/Resources/magnifier16.png);
   </action>
   <action name="actionFileListViewMode">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="icon">

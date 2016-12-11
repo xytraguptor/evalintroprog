@@ -8,5 +8,6 @@
         <file>Resources/listp-16.png</file>
         <file>Resources/wlist-16.png</file>
         <file>Resources/wlistp-16.png</file>
+        <file>Resources/wmagnifier16.png</file>
     </qresource>
 </RCC>

@@ -21,6 +21,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
@@ -51,6 +52,8 @@ public:
     QTreeView *treeView;
     QDockWidget *dockWidgetLister;
     QWidget *dockWidgetContents_12;
+    QGridLayout *gridLayout_3;
+    QTextEdit *textEdit;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -64,6 +67,9 @@ public:
         MainWindow->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         action_Search = new QAction(MainWindow);
         action_Search->setObjectName(QStringLiteral("action_Search"));
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/ico/Resources/wmagnifier16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Search->setIcon(icon1);
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QStringLiteral("actionAbout"));
         actionLister = new QAction(MainWindow);
@@ -77,12 +83,13 @@ public:
         actionFileListViewMode = new QAction(MainWindow);
         actionFileListViewMode->setObjectName(QStringLiteral("actionFileListViewMode"));
         actionFileListViewMode->setCheckable(true);
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/ico/Resources/wlistp-16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        icon1.addFile(QStringLiteral(":/ico/Resources/listp-16.png"), QSize(), QIcon::Active, QIcon::Off);
-        icon1.addFile(QStringLiteral(":/ico/Resources/wlist-16.png"), QSize(), QIcon::Active, QIcon::On);
-        icon1.addFile(QStringLiteral("Resources/wlistp-16.png"), QSize(), QIcon::Selected, QIcon::On);
-        actionFileListViewMode->setIcon(icon1);
+        actionFileListViewMode->setChecked(true);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/ico/Resources/wlistp-16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QStringLiteral(":/ico/Resources/listp-16.png"), QSize(), QIcon::Active, QIcon::Off);
+        icon2.addFile(QStringLiteral(":/ico/Resources/wlist-16.png"), QSize(), QIcon::Active, QIcon::On);
+        icon2.addFile(QStringLiteral("Resources/wlistp-16.png"), QSize(), QIcon::Selected, QIcon::On);
+        actionFileListViewMode->setIcon(icon2);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_2 = new QGridLayout(centralWidget);
@@ -93,8 +100,15 @@ public:
         listView->setObjectName(QStringLiteral("listView"));
         listView->setFrameShape(QFrame::NoFrame);
         listView->setFrameShadow(QFrame::Plain);
-        listView->setSelectionMode(QAbstractItemView::MultiSelection);
+        listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+        listView->setTextElideMode(Qt::ElideNone);
+        listView->setProperty("isWrapping", QVariant(false));
+        listView->setResizeMode(QListView::Adjust);
+        listView->setLayoutMode(QListView::SinglePass);
+        listView->setSpacing(5);
         listView->setViewMode(QListView::IconMode);
+        listView->setUniformItemSizes(true);
+        listView->setWordWrap(true);
 
         gridLayout_2->addWidget(listView, 0, 0, 1, 1);
 
@@ -102,6 +116,10 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 755, 21));
+        menuBar->setContextMenuPolicy(Qt::PreventContextMenu);
+        menuBar->setAutoFillBackground(false);
+        menuBar->setStyleSheet(QLatin1String("background-color: rgb(51, 51, 51);\n"
+"color: rgb(234, 234, 234);"));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuHelp = new QMenu(menuBar);
@@ -113,9 +131,12 @@ public:
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        mainToolBar->setContextMenuPolicy(Qt::PreventContextMenu);
         mainToolBar->setLayoutDirection(Qt::RightToLeft);
         mainToolBar->setAutoFillBackground(false);
         mainToolBar->setStyleSheet(QLatin1String("background-color: rgb(51, 51, 51);\n"
+"border-bottom-color: rgb(0, 0, 0);\n"
+"border-color: rgb(0, 170, 255);\n"
 "color: rgb(238, 238, 238);"));
         mainToolBar->setMovable(false);
         mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
@@ -176,11 +197,29 @@ public:
         dockWidgetLister = new QDockWidget(MainWindow);
         dockWidgetLister->setObjectName(QStringLiteral("dockWidgetLister"));
         dockWidgetLister->setEnabled(true);
-        dockWidgetLister->setMinimumSize(QSize(56, 200));
+        dockWidgetLister->setMinimumSize(QSize(89, 200));
+        dockWidgetLister->setAutoFillBackground(false);
+        dockWidgetLister->setStyleSheet(QLatin1String("\n"
+"border-bottom-color: rgb(85, 255, 127);\n"
+"border-top-color: rgb(0, 85, 255);\n"
+"gridline-color: rgb(255, 170, 255);\n"
+"border-top-color: rgb(255, 170, 127);\n"
+"alternate-background-color: rgb(255, 255, 127);"));
         dockWidgetLister->setFeatures(QDockWidget::DockWidgetClosable);
         dockWidgetLister->setAllowedAreas(Qt::BottomDockWidgetArea);
         dockWidgetContents_12 = new QWidget();
         dockWidgetContents_12->setObjectName(QStringLiteral("dockWidgetContents_12"));
+        gridLayout_3 = new QGridLayout(dockWidgetContents_12);
+        gridLayout_3->setSpacing(6);
+        gridLayout_3->setContentsMargins(11, 11, 11, 11);
+        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        textEdit = new QTextEdit(dockWidgetContents_12);
+        textEdit->setObjectName(QStringLiteral("textEdit"));
+        textEdit->setFrameShape(QFrame::NoFrame);
+        textEdit->setFrameShadow(QFrame::Plain);
+
+        gridLayout_3->addWidget(textEdit, 0, 0, 1, 1);
+
         dockWidgetLister->setWidget(dockWidgetContents_12);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(8), dockWidgetLister);
 

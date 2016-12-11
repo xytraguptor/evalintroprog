@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /*get initial file list*/
     modelFiles = new QFileSystemModel(this);
     modelFiles->setRootPath(currentPath);
-    modelFiles->setFilter(QDir::NoDotAndDotDot | QDir::Files); //filter files only and hide ".." folders
+    modelFiles->setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::Hidden); //filter files only and hide ".." folders
     ui->listView->setModel(modelFiles);
 
 

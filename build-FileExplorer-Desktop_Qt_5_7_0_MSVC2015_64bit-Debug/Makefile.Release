@@ -175,8 +175,12 @@ compiler_rcc_clean:
 release\qrc_resources.cpp: ..\FileExplorer\resources.qrc \
 		C:\Qt\5.7\msvc2015_64\bin\rcc.exe \
 		..\FileExplorer\Resources\magnifier16.png \
+		..\FileExplorer\Resources\listp-16.png \
 		..\FileExplorer\Resources\note-64.png \
+		..\FileExplorer\Resources\wlist-16.png \
+		..\FileExplorer\Resources\list-16.png \
 		..\FileExplorer\Resources\note-240.png \
+		..\FileExplorer\Resources\wlistp-16.png \
 		..\FileExplorer\Resources\magnifier-text-16.png
 	C:\Qt\5.7\msvc2015_64\bin\rcc.exe -name resources ..\FileExplorer\resources.qrc -o release\qrc_resources.cpp
 
@@ -696,6 +700,13 @@ release\mainwindow.obj: ..\FileExplorer\mainwindow.cpp ../FileExplorer/mainwindo
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qmenubar.h \
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\QStatusBar \
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qstatusbar.h \
+		C:\Qt\5.7\msvc2015_64\include\QtWidgets\QTextEdit \
+		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qtextedit.h \
+		C:\Qt\5.7\msvc2015_64\include\QtGui\qtextdocument.h \
+		C:\Qt\5.7\msvc2015_64\include\QtGui\qtextoption.h \
+		C:\Qt\5.7\msvc2015_64\include\QtGui\qtextcursor.h \
+		C:\Qt\5.7\msvc2015_64\include\QtGui\qtextformat.h \
+		C:\Qt\5.7\msvc2015_64\include\QtGui\qpen.h \
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\QToolBar \
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qtoolbar.h \
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\QTreeView \
