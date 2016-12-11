@@ -45,7 +45,7 @@ public:
     QLabel *label_5;
     QLineEdit *txtSearchFor;
     QLabel *label_2;
-    QLineEdit *lineEdit;
+    QLineEdit *txtFindText;
     QGridLayout *gridLayout;
     QLabel *label_3;
     QComboBox *cbDepth;
@@ -144,10 +144,10 @@ public:
 
         gridLayout_4->addWidget(label_2, 1, 0, 1, 1);
 
-        lineEdit = new QLineEdit(SearchForm);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        txtFindText = new QLineEdit(SearchForm);
+        txtFindText->setObjectName(QStringLiteral("txtFindText"));
 
-        gridLayout_4->addWidget(lineEdit, 4, 1, 1, 1);
+        gridLayout_4->addWidget(txtFindText, 4, 1, 1, 1);
 
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QStringLiteral("gridLayout"));

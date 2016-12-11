@@ -2,6 +2,8 @@
 #define SEARCHFORM_H
 
 #include <QDialog>
+#include "QFileSystemModel"
+#include "qfexsearch.h"
 
 namespace Ui {
 class SearchForm;
@@ -14,6 +16,7 @@ class SearchForm : public QDialog
 public:
     explicit SearchForm(QWidget *parent = 0);
     ~SearchForm();
+    void setCurrentPath(QString);
 
 private slots:
     void enableButtons(bool);

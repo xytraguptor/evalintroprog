@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     aboutform.cpp \
     qfexpath.cpp \
-    searchform.cpp
+    searchform.cpp \
+    qfexsearch.cpp
 
 HEADERS  += mainwindow.h \
     aboutform.h \
     qfexpath.h \
-    searchform.h
+    searchform.h \
+    qfexsearch.h
 
 FORMS    += \
     mainwindow.ui \

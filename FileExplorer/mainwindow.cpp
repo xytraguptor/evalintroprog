@@ -77,7 +77,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_action_Search_triggered()
 {
     SearchForm *sf = new SearchForm(this);
-    sf->showNormal();
+    sf->setCurrentPath(currentPath);
     sf->show();
 }
 
@@ -122,9 +122,9 @@ void MainWindow::on_dockWidgetLister_visibilityChanged(bool visible)
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
     //extract the path from the current node
-    QString selectedPath = modelDirectories->fileInfo(index).absoluteFilePath();
+     currentPath = modelDirectories->fileInfo(index).absoluteFilePath();
     //set the index for the root
-    ui->listView->setRootIndex(modelFiles->setRootPath(selectedPath));
+    ui->listView->setRootIndex(modelFiles->setRootPath(currentPath));
 }
 
 void MainWindow::on_actionFileListViewMode_toggled(bool arg1)

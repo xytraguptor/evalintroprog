@@ -1,5 +1,7 @@
+#include "QFileSystemModel"
 #include "searchform.h"
 #include "ui_searchform.h"
+#include "qfexsearch.h"
 
 SearchForm::SearchForm(QWidget *parent) :
     QDialog(parent),
@@ -28,7 +30,10 @@ SearchForm::~SearchForm()
 {
     delete ui;
 }
-
+void SearchForm::setCurrentPath(QString path)
+{
+    ui->txtSearchIn->setText(path);
+}
 void SearchForm::enableButtons(bool enable){
     ui->btnEdit->setEnabled(enable);
     ui->btnView->setEnabled(enable);
@@ -43,4 +48,17 @@ void SearchForm::on_btnCancel_pressed()
 void SearchForm::on_btnStartSearch_released()
 {
    ui->dockWidget->show();
+
+    QString searchQuery = ui->txtSearchFor->text();
+    QString searchPath = ui->txtSearchIn->text();
+    QString searchText = ui->txtFindText->text();
+    int dirDepth = ui->cbDepth->currentData().toInt();
+    bool isCaseSensitive = ui->chkCaseSensitive->checkState();
+    bool showLineNumbers = ui->chkCaseSensitive->checkState();
+    bool showFilePath = ui->chkCaseSensitive->checkState();
+
+   QFileSystemModel *result = QFeXSearch::getFilteredFiles(searchQuery,searchPath,dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
+ ui->listView->setModel(result);
+    //QFileSystemModel result = QFeXSearch::getFilteredFiles(searchQuery,searchPath,dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
+
 }
