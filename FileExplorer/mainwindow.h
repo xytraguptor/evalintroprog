@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "aboutform.h"
 #include "QFileSystemModel"
+#include "searchform.h"
 
 namespace Ui {
 class MainWindow;

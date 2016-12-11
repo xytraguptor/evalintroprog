@@ -15,15 +15,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     aboutform.cpp \
-    qfexpath.cpp
+    qfexpath.cpp \
+    searchform.cpp
 
 HEADERS  += mainwindow.h \
     aboutform.h \
-    qfexpath.h
+    qfexpath.h \
+    searchform.h
 
 FORMS    += \
     mainwindow.ui \
-    aboutform.ui
+    aboutform.ui \
+    searchform.ui
 
 DISTFILES +=
 

@@ -6,6 +6,7 @@
 #include "QIcon"
 #include "QFileSystemModel"
 #include "QTreeWidgetItem"
+#include "searchform.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -75,7 +76,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_action_Search_triggered()
 {
-
+    SearchForm *sf = new SearchForm(this);
+    sf->showNormal();
+    sf->show();
 }
 
 void MainWindow::on_actionAbout_triggered()
