@@ -13,8 +13,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    aboutform.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    aboutform.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    mainwindow.ui \
+    aboutform.ui
+
+DISTFILES +=
+
+RESOURCES += \
+    resources.qrc
