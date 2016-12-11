@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[11];
-    char stringdata0[196];
+    QByteArrayData data[12];
+    char stringdata0[230];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,7 +39,8 @@ QT_MOC_LITERAL(6, 100, 23), // "on_actionLister_toggled"
 QT_MOC_LITERAL(7, 124, 37), // "on_dockWidgetLister_visibilit..."
 QT_MOC_LITERAL(8, 162, 7), // "visible"
 QT_MOC_LITERAL(9, 170, 19), // "on_treeView_clicked"
-QT_MOC_LITERAL(10, 190, 5) // "index"
+QT_MOC_LITERAL(10, 190, 5), // "index"
+QT_MOC_LITERAL(11, 196, 33) // "on_actionFileListViewMode_tog..."
 
     },
     "MainWindow\0on_action_Search_triggered\0"
@@ -47,7 +48,8 @@ QT_MOC_LITERAL(10, 190, 5) // "index"
     "on_actionShow_Treeview_toggled\0arg1\0"
     "on_actionLister_toggled\0"
     "on_dockWidgetLister_visibilityChanged\0"
-    "visible\0on_treeView_clicked\0index"
+    "visible\0on_treeView_clicked\0index\0"
+    "on_actionFileListViewMode_toggled"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,7 +59,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,12 +67,13 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   44,    2, 0x08 /* Private */,
-       3,    0,   45,    2, 0x08 /* Private */,
-       4,    1,   46,    2, 0x08 /* Private */,
-       6,    1,   49,    2, 0x08 /* Private */,
-       7,    1,   52,    2, 0x08 /* Private */,
-       9,    1,   55,    2, 0x08 /* Private */,
+       1,    0,   49,    2, 0x08 /* Private */,
+       3,    0,   50,    2, 0x08 /* Private */,
+       4,    1,   51,    2, 0x08 /* Private */,
+       6,    1,   54,    2, 0x08 /* Private */,
+       7,    1,   57,    2, 0x08 /* Private */,
+       9,    1,   60,    2, 0x08 /* Private */,
+      11,    1,   63,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -79,6 +82,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::Bool,    5,
     QMetaType::Void, QMetaType::Bool,    8,
     QMetaType::Void, QMetaType::QModelIndex,   10,
+    QMetaType::Void, QMetaType::Bool,    5,
 
        0        // eod
 };
@@ -95,6 +99,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->on_actionLister_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 4: _t->on_dockWidgetLister_visibilityChanged((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 5: _t->on_treeView_clicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 6: _t->on_actionFileListViewMode_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -125,13 +130,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }

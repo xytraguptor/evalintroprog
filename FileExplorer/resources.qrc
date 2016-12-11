@@ -4,5 +4,9 @@
         <file>Resources/magnifier-text-16.png</file>
         <file>Resources/note-240.png</file>
         <file>Resources/note-64.png</file>
+        <file>Resources/list-16.png</file>
+        <file>Resources/listp-16.png</file>
+        <file>Resources/wlist-16.png</file>
+        <file>Resources/wlistp-16.png</file>
     </qresource>
 </RCC>

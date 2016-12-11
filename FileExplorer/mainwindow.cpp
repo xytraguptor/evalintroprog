@@ -37,17 +37,6 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         ui->treeView->hideColumn(nCount);
     }
-    // To enable full-row style:
- ui->treeView->setRootIndex(modelDirectories->index(currentPath,0));
-
-
-    //QList<QTreeWidgetItem*> selectedItemList = ui->treeView->selecselectedIndexes();
-    //if (selectedItemList.length() == 0) // no items selected
-    {
-        ui->treeView->setCurrentIndex(modelDirectories->index(0, 0, ui->treeView->rootIndex()));
-
-    }
-
 
 
     /*get initial file list*/
@@ -133,4 +122,13 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
     QString selectedPath = modelDirectories->fileInfo(index).absoluteFilePath();
     //set the index for the root
     ui->listView->setRootIndex(modelFiles->setRootPath(selectedPath));
+}
+
+void MainWindow::on_actionFileListViewMode_toggled(bool arg1)
+{
+    if(arg1){
+        ui->listView->setViewMode(QListView::IconMode);
+    }else{
+        ui->listView->setViewMode(QListView::ListMode);
+    }
 }

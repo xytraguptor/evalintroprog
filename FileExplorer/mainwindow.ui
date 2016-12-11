@@ -27,6 +27,15 @@
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
      <widget class="QListView" name="listView">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::MultiSelection</enum>
+      </property>
       <property name="viewMode">
        <enum>QListView::IconMode</enum>
       </property>
@@ -72,8 +81,21 @@
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(51, 51, 51);
+color: rgb(238, 238, 238);</string>
+   </property>
    <property name="movable">
     <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonFollowStyle</enum>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -82,6 +104,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="separator"/>
+   <addaction name="actionFileListViewMode"/>
    <addaction name="action_Search"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -249,6 +272,24 @@ image: url(:/ico/Resources/magnifier16.png);
    </property>
    <property name="toolTip">
     <string>Show Treeview</string>
+   </property>
+  </action>
+  <action name="actionFileListViewMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/ico/Resources/wlistp-16.png</normaloff>
+     <activeoff>:/ico/Resources/listp-16.png</activeoff>
+     <activeon>:/ico/Resources/wlist-16.png</activeon>
+     <selectedon>Resources/wlistp-16.png</selectedon>:/ico/Resources/wlistp-16.png</iconset>
+   </property>
+   <property name="text">
+    <string>File List view mode</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch between Details/Icon modes</string>
    </property>
   </action>
  </widget>

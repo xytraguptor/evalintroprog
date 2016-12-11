@@ -34,6 +34,7 @@ public:
     QAction *actionAbout;
     QAction *actionLister;
     QAction *actionShow_Treeview;
+    QAction *actionFileListViewMode;
     QWidget *centralWidget;
     QGridLayout *gridLayout_2;
     QListView *listView;
@@ -73,6 +74,15 @@ public:
         actionShow_Treeview->setObjectName(QStringLiteral("actionShow_Treeview"));
         actionShow_Treeview->setCheckable(true);
         actionShow_Treeview->setChecked(true);
+        actionFileListViewMode = new QAction(MainWindow);
+        actionFileListViewMode->setObjectName(QStringLiteral("actionFileListViewMode"));
+        actionFileListViewMode->setCheckable(true);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/ico/Resources/wlistp-16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/ico/Resources/listp-16.png"), QSize(), QIcon::Active, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/ico/Resources/wlist-16.png"), QSize(), QIcon::Active, QIcon::On);
+        icon1.addFile(QStringLiteral("Resources/wlistp-16.png"), QSize(), QIcon::Selected, QIcon::On);
+        actionFileListViewMode->setIcon(icon1);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_2 = new QGridLayout(centralWidget);
@@ -81,6 +91,9 @@ public:
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         listView = new QListView(centralWidget);
         listView->setObjectName(QStringLiteral("listView"));
+        listView->setFrameShape(QFrame::NoFrame);
+        listView->setFrameShadow(QFrame::Plain);
+        listView->setSelectionMode(QAbstractItemView::MultiSelection);
         listView->setViewMode(QListView::IconMode);
 
         gridLayout_2->addWidget(listView, 0, 0, 1, 1);
@@ -100,7 +113,12 @@ public:
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        mainToolBar->setLayoutDirection(Qt::RightToLeft);
+        mainToolBar->setAutoFillBackground(false);
+        mainToolBar->setStyleSheet(QLatin1String("background-color: rgb(51, 51, 51);\n"
+"color: rgb(238, 238, 238);"));
         mainToolBar->setMovable(false);
+        mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -174,6 +192,7 @@ public:
         menuView->addAction(actionShow_Treeview);
         menuView->addAction(actionLister);
         mainToolBar->addSeparator();
+        mainToolBar->addAction(actionFileListViewMode);
         mainToolBar->addAction(action_Search);
 
         retranslateUi(MainWindow);
@@ -200,6 +219,10 @@ public:
         actionShow_Treeview->setText(QApplication::translate("MainWindow", "Treeview", 0));
 #ifndef QT_NO_TOOLTIP
         actionShow_Treeview->setToolTip(QApplication::translate("MainWindow", "Show Treeview", 0));
+#endif // QT_NO_TOOLTIP
+        actionFileListViewMode->setText(QApplication::translate("MainWindow", "File List view mode", 0));
+#ifndef QT_NO_TOOLTIP
+        actionFileListViewMode->setToolTip(QApplication::translate("MainWindow", "Switch between Details/Icon modes", 0));
 #endif // QT_NO_TOOLTIP
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
