@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    aboutform.cpp
+    aboutform.cpp \
+    qfexpath.cpp
 
 HEADERS  += mainwindow.h \
-    aboutform.h
+    aboutform.h \
+    qfexpath.h
 
 FORMS    += \
     mainwindow.ui \

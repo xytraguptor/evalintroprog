@@ -26,9 +26,9 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <widget class="QWidget" name="widget" native="true">
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 161, 67);</string>
+     <widget class="QListView" name="listView">
+      <property name="viewMode">
+       <enum>QListView::IconMode</enum>
       </property>
      </widget>
     </item>
@@ -114,14 +114,36 @@
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QTreeView" name="treeView">
+       <property name="focusPolicy">
+        <enum>Qt::TabFocus</enum>
+       </property>
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
        <property name="autoFillBackground">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+selection-background-color: transparent;
+selection-color: transparent;
+
+
+
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings {
+border-image: none;
+image: url(:/ico/Resources/magnifier16.png);
+}</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Plain</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
        <property name="sizeAdjustPolicy">
         <enum>QAbstractScrollArea::AdjustIgnored</enum>
@@ -131,6 +153,9 @@
        </property>
        <property name="tabKeyNavigation">
         <bool>true</bool>
+       </property>
+       <property name="textElideMode">
+        <enum>Qt::ElideLeft</enum>
        </property>
        <property name="indentation">
         <number>10</number>
@@ -145,8 +170,11 @@
         <bool>true</bool>
        </property>
        <property name="headerHidden">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
       </widget>
      </item>
     </layout>

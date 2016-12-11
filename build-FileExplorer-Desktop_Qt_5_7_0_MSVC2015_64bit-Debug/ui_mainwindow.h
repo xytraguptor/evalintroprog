@@ -16,6 +16,7 @@
 #include <QtWidgets/QDockWidget>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -35,7 +36,7 @@ public:
     QAction *actionShow_Treeview;
     QWidget *centralWidget;
     QGridLayout *gridLayout_2;
-    QWidget *widget;
+    QListView *listView;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuHelp;
@@ -78,11 +79,11 @@ public:
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setStyleSheet(QStringLiteral("background-color: rgb(255, 161, 67);"));
+        listView = new QListView(centralWidget);
+        listView->setObjectName(QStringLiteral("listView"));
+        listView->setViewMode(QListView::IconMode);
 
-        gridLayout_2->addWidget(widget, 0, 0, 1, 1);
+        gridLayout_2->addWidget(listView, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -120,17 +121,35 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         treeView = new QTreeView(dockWidgetContents);
         treeView->setObjectName(QStringLiteral("treeView"));
-        treeView->setAutoFillBackground(false);
+        treeView->setFocusPolicy(Qt::TabFocus);
+#ifndef QT_NO_TOOLTIP
+        treeView->setToolTip(QStringLiteral(""));
+#endif // QT_NO_TOOLTIP
+        treeView->setAutoFillBackground(true);
+        treeView->setStyleSheet(QLatin1String("color: rgb(255, 255, 255);\n"
+"selection-background-color: transparent;\n"
+"selection-color: transparent;\n"
+"\n"
+"\n"
+"\n"
+"QTreeView::branch:open:has-children:!has-siblings,\n"
+"QTreeView::branch:open:has-children:has-siblings {\n"
+"border-image: none;\n"
+"image: url(:/ico/Resources/magnifier16.png);\n"
+"}"));
         treeView->setFrameShape(QFrame::NoFrame);
         treeView->setFrameShadow(QFrame::Plain);
+        treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         treeView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         treeView->setAutoScrollMargin(10);
         treeView->setTabKeyNavigation(true);
+        treeView->setTextElideMode(Qt::ElideLeft);
         treeView->setIndentation(10);
         treeView->setRootIsDecorated(true);
         treeView->setItemsExpandable(true);
         treeView->setAnimated(true);
-        treeView->setHeaderHidden(false);
+        treeView->setHeaderHidden(true);
+        treeView->header()->setVisible(false);
 
         gridLayout->addWidget(treeView, 0, 0, 1, 1);
 

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "aboutform.h"
+#include "QFileSystemModel"
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +19,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QFileSystemModel *modelDirectories;
+    QFileSystemModel *modelFiles;
+    QString currentPath;
 
 public slots:
 
@@ -27,6 +31,7 @@ private slots:
     void on_actionShow_Treeview_toggled(bool arg1);
     void on_actionLister_toggled(bool arg1);
     void on_dockWidgetLister_visibilityChanged(bool visible);
+    void on_treeView_clicked(const QModelIndex &index);
 };
 
 #endif // MAINWINDOW_H
