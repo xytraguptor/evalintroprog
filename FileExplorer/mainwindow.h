@@ -24,6 +24,9 @@ public slots:
 private slots:
     void on_action_Search_triggered();
     void on_actionAbout_triggered();
+    void on_actionShow_Treeview_toggled(bool arg1);
+    void on_actionLister_toggled(bool arg1);
+    void on_dockWidgetLister_visibilityChanged(bool visible);
 };
 
 #endif // MAINWINDOW_H
