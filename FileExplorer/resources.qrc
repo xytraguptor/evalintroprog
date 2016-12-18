@@ -9,5 +9,7 @@
         <file>Resources/wlist-16.png</file>
         <file>Resources/wlistp-16.png</file>
         <file>Resources/wmagnifier16.png</file>
+        <file>Resources/file-24.png</file>
+        <file>Resources/files-24.png</file>
     </qresource>
 </RCC>

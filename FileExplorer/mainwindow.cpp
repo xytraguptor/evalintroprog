@@ -7,6 +7,7 @@
 #include "QFileSystemModel"
 #include "QTreeWidgetItem"
 #include "searchform.h"
+#include "fileproperties.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -188,13 +189,7 @@ void MainWindow::contextMenuFileCut()
 /*Copy*/
 void MainWindow::contextMenuFileCopy()
 {
-    // If multiple selection is on, we need to erase all selected items
-//    for (int i = 0; i < ui->listView->selectedItems().size(); ++i) {
-//        // Get curent item on selected row
-//        QListWidgetItem *item = ui->listView->takeItem(ui->listView->currentRow());
-//        // And remove it
-//        delete item;
-//    }
+
 }
 /*Paste*/
 void MainWindow::contextMenuFilePaste()
@@ -209,22 +204,13 @@ void MainWindow::contextMenuFileDelete()
 /*Properties*/
 void MainWindow::contextMenuFileProperties()
  {
-    int size =0;
-
-    foreach(QModelIndex file, ui->listView->selectionModel()->selectedIndexes()){
-       //QVariant data = file.data(Qt::DisplayRole);
-       //QDebug() << data.Size(QVariant::Type).toString();
-
-       //const QVariant var = model()->data(selectedIdxs.first());
-       // next you need to convert your `var` from `QVariant` to something that you show from your data with default (`Qt::DisplayRole`) role, usually it is a `QString`:
-       //const QString selectedItemString = var.toString();
-
-       // or you also may do this by using `QStandardItemModel::itemFromIndex()` method:
-      // const QFileSystemModel* selectedItem = dynamic_cast<QFileSystemModel*>(file)->itemFromIndex(file);
-       // use your `QStandardItem`
-
-       QFileInfo xx = modelFiles->fileInfo(file);
-
+    //int size =0;
+    QList<QFileInfo> *files = new QList<QFileInfo>();
+    foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
+       QFileInfo file = modelFiles->fileInfo(index);
+       //size +=file.size();
+       *files << file;
     }
-
+    FileProperties *fp = new FileProperties(this, files);
+    fp->show();
  }
