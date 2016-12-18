@@ -34,6 +34,14 @@ private slots:
     void on_dockWidgetLister_visibilityChanged(bool visible);
     void on_treeView_clicked(const QModelIndex &index);
     void on_actionFileListViewMode_toggled(bool arg1);
+    void showFileContextMenu(const QPoint&);
+    void contextMenuFileRename();
+    void contextMenuFileConcat();
+    void contextMenuFileCut();
+    void contextMenuFileCopy();
+    void contextMenuFilePaste();
+    void contextMenuFileDelete();
+    void contextMenuFileProperties();
 };
 
 #endif // MAINWINDOW_H

@@ -211,20 +211,9 @@ void MainWindow::contextMenuFileProperties()
  {
     int size =0;
 
-    foreach(QModelIndex file, ui->listView->selectionModel()->selectedIndexes()){
-       //QVariant data = file.data(Qt::DisplayRole);
-       //QDebug() << data.Size(QVariant::Type).toString();
-
-       //const QVariant var = model()->data(selectedIdxs.first());
-       // next you need to convert your `var` from `QVariant` to something that you show from your data with default (`Qt::DisplayRole`) role, usually it is a `QString`:
-       //const QString selectedItemString = var.toString();
-
-       // or you also may do this by using `QStandardItemModel::itemFromIndex()` method:
-      // const QFileSystemModel* selectedItem = dynamic_cast<QFileSystemModel*>(file)->itemFromIndex(file);
-       // use your `QStandardItem`
-
-       QFileInfo xx = modelFiles->fileInfo(file);
-
+    foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
+       QFileInfo file = modelFiles->fileInfo(index);
+       size +=file.size();
     }
 
  }
