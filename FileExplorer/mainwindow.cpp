@@ -10,6 +10,7 @@
 #include "searchform.h"
 #include "fileproperties.h"
 #include <QMessageBox>
+#include <QInputDialog>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -149,6 +150,7 @@ void MainWindow::on_actionFileListViewMode_toggled(bool arg1)
 void MainWindow::showFileContextMenu(const QPoint &pos)
 {
     QModelIndexList list =ui->listView->selectionModel()->selectedIndexes();
+    int selectedFilesNumber = list.count();
 
     // Create menu and insert some actions
     QMenu myMenu;
@@ -161,8 +163,13 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
     connect(actionPaste, SIGNAL(triggered()), this, SLOT(contextMenuFilePaste()));
     actionPaste->setEnabled(false);
 
+    //Rename action
+    QAction *actionRename = new QAction("Rename");
+    connect(actionRename, SIGNAL(triggered()), this, SLOT(contextMenuFileRename()));
+    actionRename->setEnabled(false);
+
     //show context menu if at least one file is selected
-    if(list.count()>0){
+    if(selectedFilesNumber>0){
         myMenu.addAction("Concat",  this, SLOT(contextMenuFileConcat()));
         myMenu.actions().at(0)->setEnabled(false);
         myMenu.addSeparator();
@@ -171,9 +178,11 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
         myMenu.addAction(actionPaste);
         myMenu.addSeparator();
         myMenu.addAction("Delete",  this, SLOT(contextMenuFileDelete()));
-        myMenu.addAction("Rename",  this, SLOT(contextMenuFileRename()));
+        myMenu.addAction(actionRename);
         myMenu.addSeparator();
         myMenu.addAction("Properties",  this, SLOT(contextMenuFileProperties()));
+
+        myMenu.actions().at(5)->setEnabled(false);
 
     }else{
         myMenu.addAction(actionPaste);
@@ -181,10 +190,12 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
 
     // enable Paste action if at least one files has been copied to clipboard
     if(clipboardFiles->count()>0){
-        foreach(QAction *action, myMenu.actions()){
-            if(action->text() == "Paste")
-                actionPaste->setEnabled(true);
-        }
+        actionPaste->setEnabled(true);
+    }
+
+    // enable Rename action if only one file has been selected
+    if(selectedFilesNumber==1){
+        actionRename->setEnabled(true);
     }
 
     // Show context menu at handling position
@@ -193,7 +204,27 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
 /*Rename*/
 void MainWindow::contextMenuFileRename()
 {
+    //get file info
+    QFileInfo file = modelFiles->fileInfo(ui->listView->selectionModel()->selectedIndexes()[0]);
 
+    //build input dialog
+    bool ok;
+    QString newFileName = QInputDialog::getText(
+                this, tr("Rename"), tr("New file name:"),
+                QLineEdit::Normal, file.fileName(), &ok);
+
+    //proceed with renaming
+    if (ok && !newFileName.isEmpty()){
+        if (QFeXFile::rename(file, newFileName)) {
+            ui->listView->repaint();
+        }else{
+            QMessageBox::warning(
+                        0,
+                        tr(qPrintable("Error")),
+                        tr(qPrintable("There has been an error while trying to rename the file!")));
+        }
+
+    }
 }
 /*Concat*/
 void MainWindow::contextMenuFileConcat()

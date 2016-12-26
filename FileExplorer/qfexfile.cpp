@@ -38,3 +38,10 @@ bool QFeXFile::remove(QList<QFileInfo> *files)
     }
     return true;
 }
+
+bool QFeXFile::rename(QFileInfo file, QString newFileName)
+{
+    QString source = file.absoluteFilePath() ;
+    QString destination =  file.absolutePath() + newFileName;
+    return QFile::rename(source, destination);
+}

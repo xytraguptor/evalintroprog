@@ -992,7 +992,10 @@ release\mainwindow.obj: ..\FileExplorer\mainwindow.cpp ../FileExplorer/mainwindo
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qtreewidget.h \
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qtreewidgetitemiterator.h \
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\QMessageBox \
-		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qmessagebox.h
+		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qmessagebox.h \
+		C:\Qt\5.7\msvc2015_64\include\QtWidgets\QInputDialog \
+		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qinputdialog.h \
+		C:\Qt\5.7\msvc2015_64\include\QtWidgets\qlineedit.h
 
 release\aboutform.obj: ..\FileExplorer\aboutform.cpp ../FileExplorer/aboutform.h \
 		C:\Qt\5.7\msvc2015_64\include\QtWidgets\QDialog \

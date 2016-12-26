@@ -14,6 +14,7 @@ public:
     static bool copy(QList<QFileInfo>*, QString);
     static bool move(QList<QFileInfo>*, QString);
     static bool remove(QList<QFileInfo>*);
+    static bool rename(QFileInfo, QString);
 };
 
 #endif // QFEXFILE_H
