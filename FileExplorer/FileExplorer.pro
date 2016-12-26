@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     qfexpath.cpp \
     searchform.cpp \
     qfexsearch.cpp \
-    fileproperties.cpp
+    fileproperties.cpp \
+    qfexfile.cpp
 
 HEADERS  += mainwindow.h \
     aboutform.h \
     qfexpath.h \
     searchform.h \
     qfexsearch.h \
-    fileproperties.h
+    fileproperties.h \
+    qfexfile.h
 
 FORMS    += \
     mainwindow.ui \

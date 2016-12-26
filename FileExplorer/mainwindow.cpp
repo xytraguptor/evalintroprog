@@ -2,12 +2,14 @@
 #include "ui_mainwindow.h"
 #include "aboutform.h"
 #include "qfexpath.h"
+#include "qfexfile.h"
 #include "QPushButton"
 #include "QIcon"
 #include "QFileSystemModel"
 #include "QTreeWidgetItem"
 #include "searchform.h"
 #include "fileproperties.h"
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -16,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
+    clipboardFiles = new QList<QFileInfo>();
 
 
     //QMainWindow::centralWidget()->layout()->setContentsMargins(0, 0, 0, 0);
@@ -147,29 +149,48 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
 {
      QModelIndexList list =ui->listView->selectionModel()->selectedIndexes();
 
+     // Create menu and insert some actions
+     QMenu myMenu;
+     // Handle global position
+     QPoint globalPos = ui->listView->mapToGlobal(pos);
+
+
+     //Paste action
+     QAction *actionPaste = new QAction("Paste");
+     connect(actionPaste, SIGNAL(triggered()), this, SLOT(contextMenuFilePaste()));
+     actionPaste->setEnabled(false);
+
+
+
      //show context menu if at least one file is selected
      if(list.count()>0){
-         // Handle global position
-         QPoint globalPos = ui->listView->mapToGlobal(pos);
-
-         // Create menu and insert some actions
-         QMenu myMenu;
-
 
          myMenu.addAction("Concat",  this, SLOT(contextMenuFileConcat()));
+         myMenu.actions().at(0)->setEnabled(false);
          myMenu.addSeparator();
          myMenu.addAction("Cut",  this, SLOT(contextMenuFileCut()));
          myMenu.addAction("Copy",  this, SLOT(contextMenuFileCopy()));
-         myMenu.addAction("Paste",  this, SLOT(contextMenuFilePaste()));
+         myMenu.addAction(actionPaste);
          myMenu.addSeparator();
          myMenu.addAction("Delete",  this, SLOT(contextMenuFileDelete()));
          myMenu.addAction("Rename",  this, SLOT(contextMenuFileRename()));
          myMenu.addSeparator();
          myMenu.addAction("Properties",  this, SLOT(contextMenuFileProperties()));
 
-         // Show context menu at handling position
-         myMenu.exec(globalPos);
+     }else{
+         myMenu.addAction(actionPaste);
      }
+
+     // enable Paste action if at least one files has been copied to clipboard
+     if(clipboardFiles->count()>0){
+         foreach(QAction *action, myMenu.actions()){
+             if(action->text() == "Paste")
+                 actionPaste->setEnabled(true);
+         }
+     }
+
+     // Show context menu at handling position
+     myMenu.exec(globalPos);
 }
 /*Rename*/
 void MainWindow::contextMenuFileRename()
@@ -190,12 +211,39 @@ void MainWindow::contextMenuFileCut()
 void MainWindow::contextMenuFileCopy()
 {
 
+    clipboardFiles->clear();
+    foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
+        QFileInfo file = modelFiles->fileInfo(index);
+        *clipboardFiles << file;
+    }
 }
 /*Paste*/
 void MainWindow::contextMenuFilePaste()
- {
+{
 
- }
+    if (QFeXFile::copy(clipboardFiles, currentPath)) {
+ui->listView->repaint();
+    }else{
+        QMessageBox::warning(
+            0,
+            tr(qPrintable("Error")),
+            tr(qPrintable("There has been an error while trying to copy files to " + currentPath)));
+    }
+
+//    foreach(QFileInfo f, *clipboardFiles){
+//        if(f.isFile()){
+//            QString sourceFile = f.absoluteFilePath() ;
+//            QString destinationDir =  currentPath + f.fileName();
+
+//            if (!QFile::copy(sourceFile, destinationDir)) {
+//                QMessageBox::warning(
+//                    0,
+//                    tr(qPrintable("Error")),
+//                    tr(qPrintable("There has been an error while trying to copy " + f.fileName() + " to " + currentPath)));
+//            }
+//        }
+//    }
+}
 /*Delete*/
 void MainWindow::contextMenuFileDelete()
  {
