@@ -160,11 +160,8 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
      connect(actionPaste, SIGNAL(triggered()), this, SLOT(contextMenuFilePaste()));
      actionPaste->setEnabled(false);
 
-
-
      //show context menu if at least one file is selected
      if(list.count()>0){
-
          myMenu.addAction("Concat",  this, SLOT(contextMenuFileConcat()));
          myMenu.actions().at(0)->setEnabled(false);
          myMenu.addSeparator();
@@ -220,34 +217,32 @@ void MainWindow::contextMenuFileCopy()
 /*Paste*/
 void MainWindow::contextMenuFilePaste()
 {
-
     if (QFeXFile::copy(clipboardFiles, currentPath)) {
-ui->listView->repaint();
+        ui->listView->repaint();
     }else{
         QMessageBox::warning(
-            0,
-            tr(qPrintable("Error")),
-            tr(qPrintable("There has been an error while trying to copy files to " + currentPath)));
+                    0,
+                    tr(qPrintable("Error")),
+                    tr(qPrintable("There has been an error while trying to copy files to " + currentPath)));
     }
-
-//    foreach(QFileInfo f, *clipboardFiles){
-//        if(f.isFile()){
-//            QString sourceFile = f.absoluteFilePath() ;
-//            QString destinationDir =  currentPath + f.fileName();
-
-//            if (!QFile::copy(sourceFile, destinationDir)) {
-//                QMessageBox::warning(
-//                    0,
-//                    tr(qPrintable("Error")),
-//                    tr(qPrintable("There has been an error while trying to copy " + f.fileName() + " to " + currentPath)));
-//            }
-//        }
-//    }
 }
 /*Delete*/
 void MainWindow::contextMenuFileDelete()
  {
+    QList<QFileInfo> *files = new QList<QFileInfo>();
+    foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
+       QFileInfo file = modelFiles->fileInfo(index);
+       *files << file;
+    }
 
+    if (QFeXFile::remove(files)) {
+        ui->listView->repaint();
+    }else{
+        QMessageBox::warning(
+                    0,
+                    tr(qPrintable("Error")),
+                    tr(qPrintable("There has been an error while trying to delete selected files!")));
+    }
  }
 /*Properties*/
 void MainWindow::contextMenuFileProperties()
