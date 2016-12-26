@@ -12,6 +12,7 @@ class QFeXFile
 public:
     QFeXFile();
     static bool copy(QList<QFileInfo>*, QString);
+    static bool move(QList<QFileInfo>*, QString);
     static bool remove(QList<QFileInfo>*);
 };
 

@@ -25,6 +25,7 @@ private:
     QFileSystemModel *modelFiles;
     QString currentPath;
     QList<QFileInfo> *clipboardFiles;
+    bool clipboardFilesRemove;
 
 public slots:
 

@@ -20,16 +20,17 @@ bool QFeXFile::copy(QList<QFileInfo> *files, QString destinationPath)
     }
     return true;
 }
-
+bool QFeXFile::move(QList<QFileInfo> *files, QString destinationPath)
+{
+    if(copy(files,destinationPath) && remove(files))
+        return true;
+    else
+        return false;
+}
 bool QFeXFile::remove(QList<QFileInfo> *files)
 {
     foreach(QFileInfo f, *files){
         if(f.isFile()){
-            QString sourceFile = f.absoluteFilePath() ;
-
-           // QFile file (dbFile);
-           //     file.remove();
-
             if (!QFile::remove(f.absoluteFilePath())) {
                 return false;
             }
