@@ -8,8 +8,8 @@ SearchForm::SearchForm(QWidget *parent) :
     ui(new Ui::SearchForm)
 {
     ui->setupUi(this);
-this->
-  //  penStyleComboBox = new QComboBox;
+    this->
+    //  penStyleComboBox = new QComboBox;
     ui->cbDepth->addItem(tr("all (unlimited depth)"), -1);
     ui->cbDepth->addItem(tr("current dir only"), 0);
     ui->cbDepth->addItem(tr("1 level"), 1);
@@ -20,10 +20,10 @@ this->
     ui->cbDepth->addItem(tr("6 levels"), 6);
     ui->cbDepth->addItem(tr("7 levels"), 7);
     ui->cbDepth->addItem(tr("8 levels"), 8);
-
+    
     ui->dockWidget->hide();
-
-SearchForm::enableButtons(false);
+    
+    SearchForm::enableButtons(false);
 }
 
 SearchForm::~SearchForm()
@@ -47,8 +47,8 @@ void SearchForm::on_btnCancel_pressed()
 
 void SearchForm::on_btnStartSearch_released()
 {
-   ui->dockWidget->show();
-
+    ui->dockWidget->show();
+    
     QString searchQuery = ui->txtSearchFor->text();
     QString searchPath = ui->txtSearchIn->text();
     QString searchText = ui->txtFindText->text();
@@ -56,9 +56,9 @@ void SearchForm::on_btnStartSearch_released()
     bool isCaseSensitive = ui->chkCaseSensitive->checkState();
     bool showLineNumbers = ui->chkCaseSensitive->checkState();
     bool showFilePath = ui->chkCaseSensitive->checkState();
-
-   QFileSystemModel *result = QFeXSearch::getFilteredFiles(searchQuery,searchPath,dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
- ui->listView->setModel(result);
+    
+    QFileSystemModel *result = QFeXSearch::getFilteredFiles(searchQuery,searchPath,dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
+    ui->listView->setModel(result);
     //QFileSystemModel result = QFeXSearch::getFilteredFiles(searchQuery,searchPath,dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
-
+    
 }
