@@ -75,8 +75,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //set context menu
     ui->listView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->listView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showFileContextMenu(QPoint)));
-
-
 }
 
 MainWindow::~MainWindow()
@@ -168,10 +166,20 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
     connect(actionRename, SIGNAL(triggered()), this, SLOT(contextMenuFileRename()));
     actionRename->setEnabled(false);
 
+    //Concat action
+    QAction *actionConcat = new QAction("Concat");
+    connect(actionConcat, SIGNAL(triggered()), this, SLOT(contextMenuFileConcat()));
+    actionConcat->setEnabled(false);
+
+    //View action
+    QAction *actionView = new QAction("View");
+    connect(actionView, SIGNAL(triggered()), this, SLOT(contextMenuFileView()));
+    actionView->setVisible(false);
+
     //show context menu if at least one file is selected
     if(selectedFilesNumber>0){
-        myMenu.addAction("Concat",  this, SLOT(contextMenuFileConcat()));
-        myMenu.actions().at(0)->setEnabled(false);
+        myMenu.addAction(actionView);
+        myMenu.addAction(actionConcat);
         myMenu.addSeparator();
         myMenu.addAction("Cut",  this, SLOT(contextMenuFileCut()));
         myMenu.addAction("Copy",  this, SLOT(contextMenuFileCopy()));
@@ -196,6 +204,17 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
     // enable Rename action if only one file has been selected
     if(selectedFilesNumber==1){
         actionRename->setEnabled(true);
+    }
+
+    // enable Concat action if multiple text files have been selected
+    if(areAllSelectedFilesTxt()){
+        if(selectedFilesNumber==1){
+            actionView->setVisible(true);
+        }
+
+        if(selectedFilesNumber>=2){
+            actionConcat->setEnabled(true);
+        }
     }
 
     // Show context menu at handling position
@@ -226,10 +245,41 @@ void MainWindow::contextMenuFileRename()
 
     }
 }
+
+/*View*/
+void MainWindow::contextMenuFileView()
+{
+    setStaturBarWorkingText("Loading file content ...");
+    QFileInfo fileInfo = modelFiles->fileInfo(ui->listView->selectionModel()->selectedIndexes()[0]);
+    QFile file(fileInfo.absoluteFilePath());
+    if (file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QTextStream in(&file);
+        showInLister(in.readAll());
+    }
+    setStaturBarWorkingText("");
+}
 /*Concat*/
 void MainWindow::contextMenuFileConcat()
 {
 
+    QString content = "";
+    setStaturBarWorkingText("Concatenating files. Please wait ...");
+    foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
+        QFileInfo fileInfo = modelFiles->fileInfo(index);
+        QFile file(fileInfo.absoluteFilePath());
+
+        if (!file.open(QFile::ReadOnly | QFile::Text))
+            continue;
+
+        QTextStream in(&file);
+
+        content += in.readAll();
+        //content += std::endl;
+    }
+
+    showInLister(content);
+    setStaturBarWorkingText("");
 }
 /*Cut*/
 void MainWindow::contextMenuFileCut()
@@ -295,13 +345,43 @@ void MainWindow::contextMenuFileDelete()
 /*Properties*/
 void MainWindow::contextMenuFileProperties()
 {
-    //int size =0;
     QList<QFileInfo> *files = new QList<QFileInfo>();
     foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
         QFileInfo file = modelFiles->fileInfo(index);
-        //size +=file.size();
         *files << file;
     }
     FileProperties *fp = new FileProperties(this, files);
     fp->show();
 }
+
+
+bool MainWindow::areAllSelectedFilesTxt()
+{
+    bool result = true;
+    foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
+        QString extension = modelFiles->fileInfo(index).suffix().toLower();
+        if(extension != "txt"){
+            result = false;
+            break;
+        }
+
+    }
+
+    return result;
+}
+
+void MainWindow::showInLister(QString text)
+{
+    if(ui->dockWidgetLister->isHidden())
+    {
+        ui->dockWidgetLister->show();
+    }
+    ui->textEdit->clear();
+    ui->textEdit->setText(text);
+}
+
+void MainWindow::setStaturBarWorkingText(QString text)
+{
+    ui->statusBar->showMessage(text);
+}
+

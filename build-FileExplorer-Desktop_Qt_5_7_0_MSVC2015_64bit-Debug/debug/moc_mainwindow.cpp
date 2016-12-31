@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,15 +12,15 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.7.0. It"
+#error "This file was generated using the moc from 5.7.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[20];
-    char stringdata0[402];
+    QByteArrayData data[21];
+    char stringdata0[422];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,7 +48,8 @@ QT_MOC_LITERAL(15, 294, 18), // "contextMenuFileCut"
 QT_MOC_LITERAL(16, 313, 19), // "contextMenuFileCopy"
 QT_MOC_LITERAL(17, 333, 20), // "contextMenuFilePaste"
 QT_MOC_LITERAL(18, 354, 21), // "contextMenuFileDelete"
-QT_MOC_LITERAL(19, 376, 25) // "contextMenuFileProperties"
+QT_MOC_LITERAL(19, 376, 25), // "contextMenuFileProperties"
+QT_MOC_LITERAL(20, 402, 19) // "contextMenuFileView"
 
     },
     "MainWindow\0on_action_Search_triggered\0"
@@ -61,7 +62,8 @@ QT_MOC_LITERAL(19, 376, 25) // "contextMenuFileProperties"
     "showFileContextMenu\0contextMenuFileRename\0"
     "contextMenuFileConcat\0contextMenuFileCut\0"
     "contextMenuFileCopy\0contextMenuFilePaste\0"
-    "contextMenuFileDelete\0contextMenuFileProperties"
+    "contextMenuFileDelete\0contextMenuFileProperties\0"
+    "contextMenuFileView"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,7 +73,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -79,21 +81,22 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   89,    2, 0x08 /* Private */,
-       3,    0,   90,    2, 0x08 /* Private */,
-       4,    1,   91,    2, 0x08 /* Private */,
-       6,    1,   94,    2, 0x08 /* Private */,
-       7,    1,   97,    2, 0x08 /* Private */,
-       9,    1,  100,    2, 0x08 /* Private */,
-      11,    1,  103,    2, 0x08 /* Private */,
-      12,    1,  106,    2, 0x08 /* Private */,
-      13,    0,  109,    2, 0x08 /* Private */,
-      14,    0,  110,    2, 0x08 /* Private */,
-      15,    0,  111,    2, 0x08 /* Private */,
-      16,    0,  112,    2, 0x08 /* Private */,
-      17,    0,  113,    2, 0x08 /* Private */,
-      18,    0,  114,    2, 0x08 /* Private */,
-      19,    0,  115,    2, 0x08 /* Private */,
+       1,    0,   94,    2, 0x08 /* Private */,
+       3,    0,   95,    2, 0x08 /* Private */,
+       4,    1,   96,    2, 0x08 /* Private */,
+       6,    1,   99,    2, 0x08 /* Private */,
+       7,    1,  102,    2, 0x08 /* Private */,
+       9,    1,  105,    2, 0x08 /* Private */,
+      11,    1,  108,    2, 0x08 /* Private */,
+      12,    1,  111,    2, 0x08 /* Private */,
+      13,    0,  114,    2, 0x08 /* Private */,
+      14,    0,  115,    2, 0x08 /* Private */,
+      15,    0,  116,    2, 0x08 /* Private */,
+      16,    0,  117,    2, 0x08 /* Private */,
+      17,    0,  118,    2, 0x08 /* Private */,
+      18,    0,  119,    2, 0x08 /* Private */,
+      19,    0,  120,    2, 0x08 /* Private */,
+      20,    0,  121,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -104,6 +107,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::QModelIndex,   10,
     QMetaType::Void, QMetaType::Bool,    5,
     QMetaType::Void, QMetaType::QPoint,    2,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -136,6 +140,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 12: _t->contextMenuFilePaste(); break;
         case 13: _t->contextMenuFileDelete(); break;
         case 14: _t->contextMenuFileProperties(); break;
+        case 15: _t->contextMenuFileView(); break;
         default: ;
         }
     }
@@ -166,13 +171,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 16)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 15;
+        _id -= 16;
     }
     return _id;
 }
