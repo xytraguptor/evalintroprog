@@ -7,6 +7,8 @@
 #include "searchform.h"
 #include "fileproperties.h"
 #include "QTextStream"
+#include "QDesktopServices"
+#include "QProcess"
 
 namespace Ui {
 class MainWindow;
@@ -59,6 +61,7 @@ private slots:
     void listerContextMenuSave();
     void listerContextMenuSaveAs();
     void listerContextMenuSaveSelection();
+    void itemDoubleClicked(QModelIndex index);
 };
 
 #endif // MAINWINDOW_H

@@ -81,6 +81,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->textEdit->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->textEdit,SIGNAL(customContextMenuRequested(const QPoint&)), this,SLOT(showExtendedListerContextMenu(const QPoint &)));
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(enableExtendedListerContextMenuSaveAction()));
+
+    //connect click & double click signals
+    connect(ui->listView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(itemDoubleClicked(QModelIndex)));
 }
 
 MainWindow::~MainWindow()
@@ -271,33 +274,33 @@ void MainWindow::contextMenuFileConcat()
 {
 
     QString content = "";
-        if(ui->listView->selectionModel()->selectedIndexes().count()>0){
-    setStaturBarWorkingText("Concatenating files. Please wait ...");
+    if(ui->listView->selectionModel()->selectedIndexes().count()>0){
+        setStaturBarWorkingText("Concatenating files. Please wait ...");
 
 
 
 
-    foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
-        QFileInfo fileInfo = modelFiles->fileInfo(index);
-        QFile file(fileInfo.absoluteFilePath());
+        foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
+            QFileInfo fileInfo = modelFiles->fileInfo(index);
+            QFile file(fileInfo.absoluteFilePath());
 
-        if(currentListerFilePath.isEmpty())
-        {
-            currentListerFilePath = fileInfo.absoluteFilePath();
+            if(currentListerFilePath.isEmpty())
+            {
+                currentListerFilePath = fileInfo.absoluteFilePath();
+            }
+
+            if (!file.open(QFile::ReadOnly | QFile::Text))
+                continue;
+
+            QTextStream in(&file);
+
+            content += in.readAll();
+
         }
 
-        if (!file.open(QFile::ReadOnly | QFile::Text))
-            continue;
-
-        QTextStream in(&file);
-
-        content += in.readAll();
-
+        showInLister(content);
+        setStaturBarWorkingText("");
     }
-
-    showInLister(content);
-    setStaturBarWorkingText("");
-        }
 }
 /*Cut*/
 void MainWindow::contextMenuFileCut()
@@ -511,5 +514,19 @@ void MainWindow::listerContextMenuSaveSelection()
                         tr(qPrintable("There has been an error while trying to save this file!")));
         }
 
+    }
+}
+
+//open or execute files
+void MainWindow::itemDoubleClicked(QModelIndex index) {
+    QFileInfo file = modelFiles->fileInfo(index);
+
+    if(file.suffix() =="exe"){
+        QProcess *process = new QProcess(this);
+        QStringList arguments;
+        arguments << "";
+        process->start(file.absoluteFilePath(),arguments);
+    }else{
+        QDesktopServices::openUrl(QUrl(file.absoluteFilePath(), QUrl::TolerantMode));
     }
 }
