@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "QPushButton"
+#include "QIcon"
+#include "QFileSystemModel"
+#include "QTreeWidgetItem"
 #include "aboutform.h"
 #include "QFileSystemModel"
 #include "searchform.h"
@@ -35,6 +39,7 @@ private:
     QMenu *listerContextMenu;
     bool isListerTextChanged;
     QString currentListerFilePath;
+    QLineEdit *addressBar;
 
 
 public slots:
@@ -63,6 +68,8 @@ private slots:
     void listerContextMenuSaveSelection();
     void itemDoubleClicked(QModelIndex index);
     void on_actionExit_triggered();
+    void on_modelDirectories_rootPathChanged(QString);
+    void on_addressBar_returnPressed();
 };
 
 #endif // MAINWINDOW_H

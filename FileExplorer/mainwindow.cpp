@@ -3,10 +3,6 @@
 #include "aboutform.h"
 #include "qfexpath.h"
 #include "qfexfile.h"
-#include "QPushButton"
-#include "QIcon"
-#include "QFileSystemModel"
-#include "QTreeWidgetItem"
 #include "searchform.h"
 #include "fileproperties.h"
 #include <QMessageBox>
@@ -23,11 +19,17 @@ MainWindow::MainWindow(QWidget *parent) :
     clipboardFilesRemove = false;
     isListerTextChanged = false;
 
-
-    //QMainWindow::centralWidget()->layout()->setContentsMargins(0, 0, 0, 0);
     this->layout()->setContentsMargins(0, 0, 0, 0);
     const QSize *gridSize = new QSize(100,100);
     ui->listView->setGridSize(*gridSize);
+
+    //add address bar to toolbar
+    addressBar = new QLineEdit;
+    addressBar->setObjectName("addressBar");
+    connect(addressBar, SIGNAL(returnPressed()), this, SLOT(on_addressBar_returnPressed()));
+    addressBar->setStyleSheet("QLineEdit {background-color: #666; color:#fff; border: 0; margin: 0 10px; padding 5px;}");
+
+    ui->mainToolBar->addWidget(addressBar);
 
     /* set up dock widget objects */
     QWidget* titleWidget = new QWidget(this);
@@ -38,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /*get initial directories*/
     modelDirectories = new QFileSystemModel(this);
+
     modelDirectories->setRootPath(currentPath);
     modelDirectories->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs); //filter directories only and hide ".." folders
     ui->treeView->setModel(modelDirectories);
@@ -50,8 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /*get initial file list*/
     modelFiles = new QFileSystemModel(this);
+    connect(modelFiles, SIGNAL(rootPathChanged(QString)), this, SLOT(on_modelDirectories_rootPathChanged(QString)));
     modelFiles->setRootPath(currentPath);
-    //modelFiles->setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::Hidden); //filter files only and hide ".." folders
     ui->listView->setModel(modelFiles);
 
 
@@ -72,6 +75,10 @@ MainWindow::MainWindow(QWidget *parent) :
                                "QMenuBar:item:selected {background-color: #666; color:#fff;}  "
                                "QMenu {background-color: #666; color:#fff;} "
                                "QMenu::item:selected {background-color: #333;}");
+
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -540,4 +547,16 @@ void MainWindow::itemDoubleClicked(QModelIndex index) {
 void MainWindow::on_actionExit_triggered()
 {
     this->close();
+}
+
+void MainWindow::on_modelDirectories_rootPathChanged(QString path)
+{
+
+    addressBar->setText(path);
+}
+
+void MainWindow::on_addressBar_returnPressed()
+
+{
+    ui->listView->setRootIndex(modelFiles->setRootPath(addressBar->text()));
 }
