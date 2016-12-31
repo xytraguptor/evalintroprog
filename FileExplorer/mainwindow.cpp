@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //QMainWindow::centralWidget()->layout()->setContentsMargins(0, 0, 0, 0);
     this->layout()->setContentsMargins(0, 0, 0, 0);
+    const QSize *gridSize = new QSize(100,100);
+    ui->listView->setGridSize(*gridSize);
 
     /* set up dock widget objects */
     QWidget* titleWidget = new QWidget(this);
@@ -49,28 +51,8 @@ MainWindow::MainWindow(QWidget *parent) :
     /*get initial file list*/
     modelFiles = new QFileSystemModel(this);
     modelFiles->setRootPath(currentPath);
-    modelFiles->setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::Hidden); //filter files only and hide ".." folders
+    //modelFiles->setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::Hidden); //filter files only and hide ".." folders
     ui->listView->setModel(modelFiles);
-
-
-    //    QFrame *status_frame = new QFrame();
-    //        status_frame->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-
-    //        QHBoxLayout *layout = new QHBoxLayout(status_frame);
-    //        layout->setContentsMargins(0, 0, 0, 0);
-    ////        QProgressBar *bar = new QProgressBar(status_frame);
-    ////        bar->setMaximumHeight(10);
-    ////        bar->setMaximumWidth(100);
-
-
-    //        QPushButton *box = new QPushButton(tr(""), status_frame);
-
-    //        box->setIcon(QIcon(":Resources/magnifier16.png"));
-    //        box->setCheckable(true);
-
-    //        //layout->addWidget(bar);
-    //        layout->addWidget(box);
-    //        ui->statusBar->insertPermanentWidget(5, status_frame);
 
 
     //set List View context menu
@@ -141,6 +123,7 @@ void MainWindow::on_dockWidgetLister_visibilityChanged(bool visible)
 {
     ui->actionLister->setChecked(visible);
 }
+
 /*Set Selected Root Path*/
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
@@ -148,14 +131,20 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
     currentPath = modelDirectories->fileInfo(index).absoluteFilePath();
     //set the index for the root
     ui->listView->setRootIndex(modelFiles->setRootPath(currentPath));
+
 }
+
 /*Change List Mode*/
 void MainWindow::on_actionFileListViewMode_toggled(bool arg1)
 {
     if(arg1){
         ui->listView->setViewMode(QListView::IconMode);
+        const QSize *gridSize = new QSize(100,100);
+        ui->listView->setGridSize(*gridSize);
     }else{
         ui->listView->setViewMode(QListView::ListMode);
+        QSize *gridSize = new QSize(ui->listView->width()/3,25);
+        ui->listView->setGridSize(*gridSize);
     }
 }
 
@@ -421,9 +410,9 @@ void MainWindow::showExtendedListerContextMenu(const QPoint &pt)
 {
     QMenu *menu = ui->textEdit->createStandardContextMenu();
     QTextCursor cursor = ui->textEdit->textCursor();
-menu->setStyleSheet("QMenu {background-color: #333; color:#fff;} "
-                    "QMenu::item:selected {background-color: #666;}"
-                    "QMenu::item:disabled {color: #555;}");
+    menu->setStyleSheet("QMenu {background-color: #333; color:#fff;} "
+                        "QMenu::item:selected {background-color: #666;}"
+                        "QMenu::item:disabled {color: #555;}");
     //separator
     QAction *separator = new QAction(this);
     separator->setSeparator(true);
@@ -532,13 +521,19 @@ void MainWindow::listerContextMenuSaveSelection()
 void MainWindow::itemDoubleClicked(QModelIndex index) {
     QFileInfo file = modelFiles->fileInfo(index);
 
-    if(file.suffix() =="exe"){
-        QProcess *process = new QProcess(this);
-        QStringList arguments;
-        arguments << "";
-        process->start(file.absoluteFilePath(),arguments);
+    if(file.isDir()){
+        on_treeView_clicked(index);
+        ui->treeView->expand(modelDirectories->index(file.absolutePath()));
+        ui->treeView->repaint();
     }else{
-        QDesktopServices::openUrl(QUrl(file.absoluteFilePath(), QUrl::TolerantMode));
+        if(file.suffix() =="exe"){
+            QProcess *process = new QProcess(this);
+            QStringList arguments;
+            arguments << "";
+            process->start(file.absoluteFilePath(),arguments);
+        }else{
+            QDesktopServices::openUrl(QUrl(file.absoluteFilePath(), QUrl::TolerantMode));
+        }
     }
 }
 

@@ -49,16 +49,10 @@
        <enum>QListView::Adjust</enum>
       </property>
       <property name="layoutMode">
-       <enum>QListView::Batched</enum>
+       <enum>QListView::SinglePass</enum>
       </property>
       <property name="spacing">
        <number>5</number>
-      </property>
-      <property name="gridSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
       </property>
       <property name="viewMode">
        <enum>QListView::IconMode</enum>
