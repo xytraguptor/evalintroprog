@@ -87,17 +87,14 @@ color: rgb(234, 234, 234);</string>
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
-   </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -107,7 +104,6 @@ color: rgb(234, 234, 234);</string>
     <addaction name="actionLister"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -360,6 +356,14 @@ alternate-background-color: rgb(255, 255, 127);</string>
    </property>
    <property name="toolTip">
     <string>Switch between Details/Icon modes</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="toolTip">
+    <string>Exit QFeX</string>
    </property>
   </action>
  </widget>

@@ -62,6 +62,7 @@ private slots:
     void listerContextMenuSaveAs();
     void listerContextMenuSaveSelection();
     void itemDoubleClicked(QModelIndex index);
+    void on_actionExit_triggered();
 };
 
 #endif // MAINWINDOW_H

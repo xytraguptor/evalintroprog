@@ -84,6 +84,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //connect click & double click signals
     connect(ui->listView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(itemDoubleClicked(QModelIndex)));
+
+    //style the main menu
+    ui->menuBar->setStyleSheet("QMenuBar {background-color: rgb(51, 51, 51);border-bottom-color: rgb(0, 0, 0);border-color: rgb(0, 170, 255);color: rgb(238, 238, 238); padding: 2px 5px 2px 5px;}  "
+                               "QMenuBar:item:selected {background-color: #666; color:#fff;}  "
+                               "QMenu {background-color: #666; color:#fff;} "
+                               "QMenu::item:selected {background-color: #333;}");
 }
 
 MainWindow::~MainWindow()
@@ -160,7 +166,10 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
     int selectedFilesNumber = list.count();
 
     // Create menu and insert some actions
-    QMenu myMenu;
+    QMenu listViewMenu;
+    listViewMenu.setStyleSheet("QMenu {background-color: #333; color:#fff;} "
+                               "QMenu::item:selected {background-color: #666;}"
+                               "QMenu::item:disabled {color: #555;}");
     // Handle global position
     QPoint globalPos = ui->listView->mapToGlobal(pos);
 
@@ -187,22 +196,22 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
 
     //show context menu if at least one file is selected
     if(selectedFilesNumber>0){
-        myMenu.addAction(actionView);
-        myMenu.addAction(actionConcat);
-        myMenu.addSeparator();
-        myMenu.addAction("Cut",  this, SLOT(contextMenuFileCut()));
-        myMenu.addAction("Copy",  this, SLOT(contextMenuFileCopy()));
-        myMenu.addAction(actionPaste);
-        myMenu.addSeparator();
-        myMenu.addAction("Delete",  this, SLOT(contextMenuFileDelete()));
-        myMenu.addAction(actionRename);
-        myMenu.addSeparator();
-        myMenu.addAction("Properties",  this, SLOT(contextMenuFileProperties()));
+        listViewMenu.addAction(actionView);
+        listViewMenu.addAction(actionConcat);
+        listViewMenu.addSeparator();
+        listViewMenu.addAction("Cut",  this, SLOT(contextMenuFileCut()));
+        listViewMenu.addAction("Copy",  this, SLOT(contextMenuFileCopy()));
+        listViewMenu.addAction(actionPaste);
+        listViewMenu.addSeparator();
+        listViewMenu.addAction("Delete",  this, SLOT(contextMenuFileDelete()));
+        listViewMenu.addAction(actionRename);
+        listViewMenu.addSeparator();
+        listViewMenu.addAction("Properties",  this, SLOT(contextMenuFileProperties()));
 
-        myMenu.actions().at(5)->setEnabled(false);
+        listViewMenu.actions().at(5)->setEnabled(false);
 
     }else{
-        myMenu.addAction(actionPaste);
+        listViewMenu.addAction(actionPaste);
     }
 
     // enable Paste action if at least one files has been copied to clipboard
@@ -227,7 +236,7 @@ void MainWindow::showFileContextMenu(const QPoint &pos)
     }
 
     // Show context menu at handling position
-    myMenu.exec(globalPos);
+    listViewMenu.exec(globalPos);
 }
 /*Rename*/
 void MainWindow::contextMenuFileRename()
@@ -412,7 +421,9 @@ void MainWindow::showExtendedListerContextMenu(const QPoint &pt)
 {
     QMenu *menu = ui->textEdit->createStandardContextMenu();
     QTextCursor cursor = ui->textEdit->textCursor();
-
+menu->setStyleSheet("QMenu {background-color: #333; color:#fff;} "
+                    "QMenu::item:selected {background-color: #666;}"
+                    "QMenu::item:disabled {color: #555;}");
     //separator
     QAction *separator = new QAction(this);
     separator->setSeparator(true);
@@ -529,4 +540,9 @@ void MainWindow::itemDoubleClicked(QModelIndex index) {
     }else{
         QDesktopServices::openUrl(QUrl(file.absoluteFilePath(), QUrl::TolerantMode));
     }
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    this->close();
 }
