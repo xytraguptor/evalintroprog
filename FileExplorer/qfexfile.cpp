@@ -45,3 +45,21 @@ bool QFeXFile::rename(QFileInfo file, QString newFileName)
     QString destination =  file.absolutePath() + newFileName;
     return QFile::rename(source, destination);
 }
+
+bool QFeXFile::saveContent(QString content, QString fileName)
+{
+    bool result = false;
+
+    if(fileName.isEmpty())
+        return result;
+
+    QFile file(fileName);
+    if ( file.open(QIODevice::ReadWrite) )
+    {
+        QTextStream stream( &file );
+        stream << content << endl;
+        result = true;
+
+    }
+    return result;
+}

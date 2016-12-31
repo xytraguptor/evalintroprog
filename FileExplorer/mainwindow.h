@@ -30,6 +30,9 @@ private:
     bool areAllSelectedFilesTxt();
     void showInLister(QString);
     void setStaturBarWorkingText(QString);
+    QMenu *listerContextMenu;
+    bool isListerTextChanged;
+    QString currentListerFilePath;
 
 
 public slots:
@@ -51,6 +54,11 @@ private slots:
     void contextMenuFileDelete();
     void contextMenuFileProperties();
     void contextMenuFileView();
+    void showExtendedListerContextMenu(const QPoint &pt);
+    void enableExtendedListerContextMenuSaveAction();
+    void listerContextMenuSave();
+    void listerContextMenuSaveAs();
+    void listerContextMenuSaveSelection();
 };
 
 #endif // MAINWINDOW_H

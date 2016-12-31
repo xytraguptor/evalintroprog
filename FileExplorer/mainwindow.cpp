@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     clipboardFiles = new QList<QFileInfo>();
     clipboardFilesRemove = false;
+    isListerTextChanged = false;
 
 
     //QMainWindow::centralWidget()->layout()->setContentsMargins(0, 0, 0, 0);
@@ -72,9 +73,14 @@ MainWindow::MainWindow(QWidget *parent) :
     //        ui->statusBar->insertPermanentWidget(5, status_frame);
 
 
-    //set context menu
+    //set List View context menu
     ui->listView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->listView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showFileContextMenu(QPoint)));
+
+    //set Lister context menu
+    ui->textEdit->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->textEdit,SIGNAL(customContextMenuRequested(const QPoint&)), this,SLOT(showExtendedListerContextMenu(const QPoint &)));
+    connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(enableExtendedListerContextMenuSaveAction()));
 }
 
 MainWindow::~MainWindow()
@@ -256,6 +262,7 @@ void MainWindow::contextMenuFileView()
     {
         QTextStream in(&file);
         showInLister(in.readAll());
+        currentListerFilePath = fileInfo.absoluteFilePath();
     }
     setStaturBarWorkingText("");
 }
@@ -264,10 +271,20 @@ void MainWindow::contextMenuFileConcat()
 {
 
     QString content = "";
+        if(ui->listView->selectionModel()->selectedIndexes().count()>0){
     setStaturBarWorkingText("Concatenating files. Please wait ...");
+
+
+
+
     foreach(QModelIndex index, ui->listView->selectionModel()->selectedIndexes()){
         QFileInfo fileInfo = modelFiles->fileInfo(index);
         QFile file(fileInfo.absoluteFilePath());
+
+        if(currentListerFilePath.isEmpty())
+        {
+            currentListerFilePath = fileInfo.absoluteFilePath();
+        }
 
         if (!file.open(QFile::ReadOnly | QFile::Text))
             continue;
@@ -275,11 +292,12 @@ void MainWindow::contextMenuFileConcat()
         QTextStream in(&file);
 
         content += in.readAll();
-        //content += std::endl;
+
     }
 
     showInLister(content);
     setStaturBarWorkingText("");
+        }
 }
 /*Cut*/
 void MainWindow::contextMenuFileCut()
@@ -378,6 +396,7 @@ void MainWindow::showInLister(QString text)
     }
     ui->textEdit->clear();
     ui->textEdit->setText(text);
+    isListerTextChanged = false;
 }
 
 void MainWindow::setStaturBarWorkingText(QString text)
@@ -385,3 +404,112 @@ void MainWindow::setStaturBarWorkingText(QString text)
     ui->statusBar->showMessage(text);
 }
 
+//LISTER CONTEXT MENU
+void MainWindow::showExtendedListerContextMenu(const QPoint &pt)
+{
+    QMenu *menu = ui->textEdit->createStandardContextMenu();
+    QTextCursor cursor = ui->textEdit->textCursor();
+
+    //separator
+    QAction *separator = new QAction(this);
+    separator->setSeparator(true);
+    addAction(separator);
+
+
+    //Save changes action
+    QAction *actionSaveChanges = new QAction("Save");
+    connect(actionSaveChanges, SIGNAL(triggered()), this, SLOT(listerContextMenuSave()));
+
+    //Save Changes As action
+    QAction *actionSaveChangesAs = new QAction("Save as ...");
+    connect(actionSaveChangesAs, SIGNAL(triggered()), this, SLOT(listerContextMenuSaveAs()));
+
+
+    //Save selection action
+    QAction *actionSaveSelection = new QAction("Save selection as ...");
+    connect(actionSaveSelection, SIGNAL(triggered()), this, SLOT(listerContextMenuSaveSelection()));
+
+    if(isListerTextChanged){
+        menu->insertAction(menu->actions()[0],actionSaveChanges);
+        menu->insertAction(menu->actions()[1],actionSaveChangesAs);
+        menu->insertAction(menu->actions()[2],separator);
+    }
+
+    if(cursor.selectedText()!=""){
+        menu->insertAction(menu->actions()[0],actionSaveSelection);
+        menu->insertAction(menu->actions()[1],separator);
+    }
+
+    menu->exec(ui->textEdit->mapToGlobal(pt));
+    delete menu;
+
+}
+
+void MainWindow::enableExtendedListerContextMenuSaveAction()
+{
+    isListerTextChanged = true;
+}
+
+/*Lister Save*/
+void MainWindow::listerContextMenuSave()
+{
+    if (!currentListerFilePath.isEmpty()){
+        if (QFeXFile::saveContent(ui->textEdit->toPlainText(), currentListerFilePath)) {
+            setStaturBarWorkingText("File saved.");
+        }else{
+            QMessageBox::warning(
+                        0,
+                        tr(qPrintable("Error")),
+                        tr(qPrintable("There has been an error while trying to save this file!")));
+        }
+
+    }
+}
+/*Lister Save As*/
+void MainWindow::listerContextMenuSaveAs()
+{
+    //get file info
+    QFileInfo *file = new QFileInfo(currentListerFilePath);
+
+    //build input dialog
+    bool ok;
+    QString newFileName = QInputDialog::getText(
+                this, tr("Save as ..."), tr("New file name:"),
+                QLineEdit::Normal, file->fileName(), &ok);
+
+    //proceed with saving
+    if (!currentListerFilePath.isEmpty()){
+        if (QFeXFile::saveContent(ui->textEdit->toPlainText(), file->absolutePath() + newFileName)) {
+            setStaturBarWorkingText("File saved.");
+        }else{
+            QMessageBox::warning(
+                        0,
+                        tr(qPrintable("Error")),
+                        tr(qPrintable("There has been an error while trying to save this file!")));
+        }
+
+    }
+}
+
+/*Lister Save Selection As*/
+void MainWindow::listerContextMenuSaveSelection()
+{
+    //build input dialog
+    bool ok;
+    QString newFileName = QInputDialog::getText(
+                this, tr("Save selection"), tr("File name:"),
+                QLineEdit::Normal, "", &ok);
+
+    //proceed with saving
+    if (!currentListerFilePath.isEmpty()){
+        if (QFeXFile::saveContent(ui->textEdit->textCursor().selectedText(), currentPath + newFileName)) {
+            setStaturBarWorkingText("Selection saved.");
+        }else{
+            QMessageBox::warning(
+                        0,
+                        tr(qPrintable("Error")),
+                        tr(qPrintable("There has been an error while trying to save this file!")));
+        }
+
+    }
+}
