@@ -6,6 +6,7 @@
 #include "QFileSystemModel"
 #include "searchform.h"
 #include "fileproperties.h"
+#include "QTextStream"
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,10 @@ private:
     QString currentPath;
     QList<QFileInfo> *clipboardFiles;
     bool clipboardFilesRemove;
+    bool areAllSelectedFilesTxt();
+    void showInLister(QString);
+    void setStaturBarWorkingText(QString);
+
 
 public slots:
 
@@ -45,6 +50,7 @@ private slots:
     void contextMenuFilePaste();
     void contextMenuFileDelete();
     void contextMenuFileProperties();
+    void contextMenuFileView();
 };
 
 #endif // MAINWINDOW_H

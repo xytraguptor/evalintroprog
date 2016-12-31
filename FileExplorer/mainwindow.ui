@@ -288,6 +288,9 @@ alternate-background-color: rgb(255, 255, 127);</string>
    </widget>
   </widget>
   <action name="action_Search">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/ico/Resources/wmagnifier16.png</normaloff>:/ico/Resources/wmagnifier16.png</iconset>
