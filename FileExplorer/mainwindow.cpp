@@ -489,7 +489,7 @@ void MainWindow::listerContextMenuSaveAs()
 
     //proceed with saving
     if (!currentListerFilePath.isEmpty()){
-        if (QFeXFile::saveContent(ui->textEdit->toPlainText(), file->absolutePath() + newFileName)) {
+        if (QFeXFile::saveContent(ui->textEdit->toPlainText(), file->absolutePath() + QDir::separator() + newFileName)) {
             setStaturBarWorkingText("File saved.");
         }else{
             QMessageBox::warning(
@@ -512,7 +512,7 @@ void MainWindow::listerContextMenuSaveSelection()
 
     //proceed with saving
     if (!currentListerFilePath.isEmpty()){
-        if (QFeXFile::saveContent(ui->textEdit->textCursor().selectedText(), currentPath + newFileName)) {
+        if (QFeXFile::saveContent(ui->textEdit->textCursor().selectedText(), currentPath + QDir::separator() + newFileName)) {
             setStaturBarWorkingText("Selection saved.");
         }else{
             QMessageBox::warning(
