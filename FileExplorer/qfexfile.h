@@ -3,6 +3,7 @@
 
 #include "QFileSystemModel"
 #include "QTextStream"
+#include "QDir"
 
 
 namespace QFeX {

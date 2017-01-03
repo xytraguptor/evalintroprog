@@ -11,7 +11,7 @@ bool QFeXFile::copy(QList<QFileInfo> *files, QString destinationPath)
     foreach(QFileInfo f, *files){
         if(f.isFile()){
             QString sourceFile = f.absoluteFilePath() ;
-            QString destinationDir =  destinationPath + f.fileName();
+            QString destinationDir =  destinationPath + QDir::separator() + f.fileName();
 
             if (!QFile::copy(sourceFile, destinationDir)) {
                 return false;
@@ -41,8 +41,9 @@ bool QFeXFile::remove(QList<QFileInfo> *files)
 
 bool QFeXFile::rename(QFileInfo file, QString newFileName)
 {
-    QString source = file.absoluteFilePath() ;
-    QString destination =  file.absolutePath() + newFileName;
+    QString source = file.absoluteFilePath();
+
+    QString destination =  file.absolutePath() + QDir::separator() + newFileName;
     return QFile::rename(source, destination);
 }
 
