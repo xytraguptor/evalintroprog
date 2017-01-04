@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "QFileSystemModel"
 #include "qfexsearch.h"
+#include <QObject>
 
 namespace Ui {
 class SearchForm;

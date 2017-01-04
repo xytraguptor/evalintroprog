@@ -1,7 +1,7 @@
 #include "QFileSystemModel"
 #include "searchform.h"
 #include "ui_searchform.h"
-#include "qfexsearch.h"
+#include "QStringListModel"
 
 SearchForm::SearchForm(QWidget *parent) :
     QDialog(parent),
@@ -57,8 +57,11 @@ void SearchForm::on_btnStartSearch_released()
     bool showLineNumbers = ui->chkCaseSensitive->checkState();
     bool showFilePath = ui->chkCaseSensitive->checkState();
 
-    QFileSystemModel *result = QFeXSearch::getFilteredFiles(searchQuery,searchPath,dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
-    ui->listView->setModel(result);
-    //QFileSystemModel result = QFeXSearch::getFilteredFiles(searchQuery,searchPath,dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
+    //QFeXSearch *search = new QFeXSearch;
+    QFeXSearch *search = new QFeXSearch(searchQuery, searchPath, dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
+    QStringList result = search->getFilteredFiles();
+    QStringListModel *model = new QStringListModel();
+    model->setStringList(result);
+    ui->listView->setModel(model);
 
 }
