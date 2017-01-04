@@ -263,7 +263,7 @@ void MainWindow::contextMenuFileRename()
 /*View*/
 void MainWindow::contextMenuFileView()
 {
-    setStaturBarWorkingText("Loading file content ...");
+    setStatusBarWorkingText("Loading file content ...");
     QFileInfo fileInfo = modelFiles->fileInfo(ui->listView->selectionModel()->selectedIndexes()[0]);
     QFile file(fileInfo.absoluteFilePath());
     if (file.open(QFile::ReadOnly | QFile::Text))
@@ -272,7 +272,7 @@ void MainWindow::contextMenuFileView()
         showInLister(in.readAll());
         currentListerFilePath = fileInfo.absoluteFilePath();
     }
-    setStaturBarWorkingText("");
+    setStatusBarWorkingText("");
 }
 /*Concat*/
 void MainWindow::contextMenuFileConcat()
@@ -280,7 +280,7 @@ void MainWindow::contextMenuFileConcat()
 
     QString content = "";
     if(ui->listView->selectionModel()->selectedIndexes().count()>0){
-        setStaturBarWorkingText("Concatenating files. Please wait ...");
+        setStatusBarWorkingText("Concatenating files. Please wait ...");
 
 
 
@@ -304,7 +304,7 @@ void MainWindow::contextMenuFileConcat()
         }
 
         showInLister(content);
-        setStaturBarWorkingText("");
+        setStatusBarWorkingText("");
     }
 }
 /*Cut*/
@@ -407,7 +407,7 @@ void MainWindow::showInLister(QString text)
     isListerTextChanged = false;
 }
 
-void MainWindow::setStaturBarWorkingText(QString text)
+void MainWindow::setStatusBarWorkingText(QString text)
 {
     ui->statusBar->showMessage(text);
 }
@@ -465,7 +465,7 @@ void MainWindow::listerContextMenuSave()
 {
     if (!currentListerFilePath.isEmpty()){
         if (QFeXFile::saveContent(ui->textEdit->toPlainText(), currentListerFilePath)) {
-            setStaturBarWorkingText("File saved.");
+            setStatusBarWorkingText("File saved.");
         }else{
             QMessageBox::warning(
                         0,
@@ -490,7 +490,7 @@ void MainWindow::listerContextMenuSaveAs()
     //proceed with saving
     if (!currentListerFilePath.isEmpty()){
         if (QFeXFile::saveContent(ui->textEdit->toPlainText(), file->absolutePath() + QDir::separator() + newFileName)) {
-            setStaturBarWorkingText("File saved.");
+            setStatusBarWorkingText("File saved.");
         }else{
             QMessageBox::warning(
                         0,
@@ -513,7 +513,7 @@ void MainWindow::listerContextMenuSaveSelection()
     //proceed with saving
     if (!currentListerFilePath.isEmpty()){
         if (QFeXFile::saveContent(ui->textEdit->textCursor().selectedText(), currentPath + QDir::separator() + newFileName)) {
-            setStaturBarWorkingText("Selection saved.");
+            setStatusBarWorkingText("Selection saved.");
         }else{
             QMessageBox::warning(
                         0,

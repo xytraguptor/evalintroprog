@@ -5,6 +5,8 @@
 #include "QFileSystemModel"
 #include "qfexsearch.h"
 #include <QObject>
+#include "QString"
+#include "QStringListModel"
 
 namespace Ui {
 class SearchForm;
@@ -22,11 +24,12 @@ public:
 private slots:
     void enableButtons(bool);
     void on_btnCancel_pressed();
-
     void on_btnStartSearch_released();
+    void setStatusBarWorkingText(QString text);
 
 private:
     Ui::SearchForm *ui;
+    QStringListModel *listViewModel;
 };
 
 #endif // SEARCHFORM_H

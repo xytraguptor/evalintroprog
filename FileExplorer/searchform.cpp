@@ -1,7 +1,7 @@
 #include "QFileSystemModel"
 #include "searchform.h"
 #include "ui_searchform.h"
-#include "QStringListModel"
+
 
 SearchForm::SearchForm(QWidget *parent) :
     QDialog(parent),
@@ -21,9 +21,20 @@ SearchForm::SearchForm(QWidget *parent) :
     ui->cbDepth->addItem(tr("7 levels"), 7);
     ui->cbDepth->addItem(tr("8 levels"), 8);
 
+
+    //resize search window
+    resize(parent->width()/2, parent->height()/2);
+    //move the window to center of the parent
+    const QPoint global = mapToGlobal(parent->rect().center());
+    move(global.x() - width() / 2, global.y() - height() / 2);
+
     ui->dockWidget->hide();
 
+    listViewModel = new QStringListModel();
+
     SearchForm::enableButtons(false);
+
+
 }
 
 SearchForm::~SearchForm()
@@ -48,6 +59,8 @@ void SearchForm::on_btnCancel_pressed()
 void SearchForm::on_btnStartSearch_released()
 {
     ui->dockWidget->show();
+    setStatusBarWorkingText("Searching for files ...");
+    ui->dockWidget->repaint();
 
     QString searchQuery = ui->txtSearchFor->text();
     QString searchPath = ui->txtSearchIn->text();
@@ -57,11 +70,23 @@ void SearchForm::on_btnStartSearch_released()
     bool showLineNumbers = ui->chkCaseSensitive->checkState();
     bool showFilePath = ui->chkCaseSensitive->checkState();
 
+
     //QFeXSearch *search = new QFeXSearch;
     QFeXSearch *search = new QFeXSearch(searchQuery, searchPath, dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
     QStringList result = search->getFilteredFiles();
-    QStringListModel *model = new QStringListModel();
-    model->setStringList(result);
-    ui->listView->setModel(model);
+    listViewModel->setStringList(result);
 
+//resize list view and set the model
+    int height = result.count() *17;
+    if(height>300)
+        height = 300;
+    ui->listView->setMinimumHeight(height);
+    ui->listView->setModel(listViewModel);
+
+    setStatusBarWorkingText(QString::number(result.count()) + " files found!");
+}
+
+void SearchForm::setStatusBarWorkingText(QString text)
+{
+    ui->lblStatusBar->setText(text);
 }

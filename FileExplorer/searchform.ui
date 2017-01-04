@@ -233,6 +233,12 @@ gridline-color: rgb(255, 255, 127);</string>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QListView" name="listView">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -269,6 +275,13 @@ gridline-color: rgb(255, 255, 127);</string>
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblStatusBar">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
         </widget>
        </item>
       </layout>

@@ -26,12 +26,12 @@ void QFeXSearch::searchFiles(QString query, QString path, int depth, QStringList
     QDir currentDir(path);
     const QString parentPath = path.endsWith("/") ? path : path  + "/";
 
+    //directory depth omiting -1(All) option
     if (this->dirDepth() != -1 && depth < 0)
            return;
 
     //build filters
     QStringList filters;
-
     if(query.isEmpty()) {
         filters << "*"; //search all
     } else {
@@ -49,8 +49,8 @@ void QFeXSearch::searchFiles(QString query, QString path, int depth, QStringList
             results->append(parentPath + match);
         }
     }
+    //search subfolders
     foreach (QString dir, currentDir.entryList(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot)){
-
                 QString newPath = parentPath + dir;
                 searchFiles(query, newPath, depth-1, results);
     }

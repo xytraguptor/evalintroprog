@@ -35,7 +35,7 @@ private:
     bool clipboardFilesRemove;
     bool areAllSelectedFilesTxt();
     void showInLister(QString);
-    void setStaturBarWorkingText(QString);
+    void setStatusBarWorkingText(QString);
     QMenu *listerContextMenu;
     bool isListerTextChanged;
     QString currentListerFilePath;
