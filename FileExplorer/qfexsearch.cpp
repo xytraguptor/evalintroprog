@@ -13,19 +13,21 @@ QFeXSearch::QFeXSearch(QString &_searchQuery, QString &_searchPath, int &_dirDep
     this->setSearchQuery(_searchQuery);
     this->setSearchText(_searchText);
     this->setShowFilePath(_showFilePath);
-    _it = 0;
     _result = new QStringList();
 }
 
 QStringList QFeXSearch::getFilteredFiles(){
 
-    searchFiles(this->searchQuery(), this->searchPath(), _result);
+    searchFiles(this->searchQuery(), this->searchPath(), this->dirDepth(), _result);
     return *_result;
 }
 
-void QFeXSearch::searchFiles(QString query, QString path, QStringList *results){
+void QFeXSearch::searchFiles(QString query, QString path, int depth, QStringList *results){
     QDir currentDir(path);
     const QString parentPath = path.endsWith("/") ? path : path  + "/";
+
+    if (this->dirDepth() != -1 && depth < 0)
+           return;
 
     //build filters
     QStringList filters;
@@ -35,15 +37,6 @@ void QFeXSearch::searchFiles(QString query, QString path, QStringList *results){
     } else {
         filters << "*" + query + "*";
     }
-
-    //    if(query.indexOf("*")<0)
-    //    {
-    //        //a.* & *.a
-    //        filters << "*."+query << query+".*";
-    //    }else{
-    //        filters << query;
-    //    }
-
 
     foreach (const QString &match, currentDir.entryList(QStringList(filters), QDir::Files | QDir::NoSymLinks)){
         //match if case sensitive option is selected
@@ -57,7 +50,8 @@ void QFeXSearch::searchFiles(QString query, QString path, QStringList *results){
         }
     }
     foreach (QString dir, currentDir.entryList(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot)){
-        QString newPath = parentPath + dir;
-        searchFiles(query, newPath , results);
+
+                QString newPath = parentPath + dir;
+                searchFiles(query, newPath, depth-1, results);
     }
 }

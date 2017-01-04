@@ -55,7 +55,7 @@ private:
     bool _showLineNumbers;
     bool _showFilePath;
     QStringList *_result;
-    void searchFiles(QString query, QString path, QStringList*results);
+    void searchFiles(QString query, QString path, int depth, QStringList*results);
 };
 
 #endif // QFEXSEARCH_H
