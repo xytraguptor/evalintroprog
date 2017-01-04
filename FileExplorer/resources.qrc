@@ -11,5 +11,6 @@
         <file>Resources/wmagnifier16.png</file>
         <file>Resources/file-24.png</file>
         <file>Resources/files-24.png</file>
+        <file>Resources/ajax-loader.gif</file>
     </qresource>
 </RCC>

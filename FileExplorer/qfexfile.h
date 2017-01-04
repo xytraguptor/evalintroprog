@@ -2,6 +2,8 @@
 #define QFEXFILE_H
 
 #include "QFileSystemModel"
+#include "QTextStream"
+#include "QDir"
 
 
 namespace QFeX {
@@ -15,6 +17,7 @@ public:
     static bool move(QList<QFileInfo>*, QString);
     static bool remove(QList<QFileInfo>*);
     static bool rename(QFileInfo, QString);
+    static bool saveContent(QString, QString);
 };
 
 #endif // QFEXFILE_H

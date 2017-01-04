@@ -2,10 +2,17 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "QPushButton"
+#include "QIcon"
+#include "QFileSystemModel"
+#include "QTreeWidgetItem"
 #include "aboutform.h"
 #include "QFileSystemModel"
 #include "searchform.h"
 #include "fileproperties.h"
+#include "QTextStream"
+#include "QDesktopServices"
+#include "QProcess"
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +33,14 @@ private:
     QString currentPath;
     QList<QFileInfo> *clipboardFiles;
     bool clipboardFilesRemove;
+    bool areAllSelectedFilesTxt();
+    void showInLister(QString);
+    void setStaturBarWorkingText(QString);
+    QMenu *listerContextMenu;
+    bool isListerTextChanged;
+    QString currentListerFilePath;
+    QLineEdit *addressBar;
+
 
 public slots:
 
@@ -45,6 +60,16 @@ private slots:
     void contextMenuFilePaste();
     void contextMenuFileDelete();
     void contextMenuFileProperties();
+    void contextMenuFileView();
+    void showExtendedListerContextMenu(const QPoint &pt);
+    void enableExtendedListerContextMenuSaveAction();
+    void listerContextMenuSave();
+    void listerContextMenuSaveAs();
+    void listerContextMenuSaveSelection();
+    void itemDoubleClicked(QModelIndex index);
+    void on_actionExit_triggered();
+    void on_modelDirectories_rootPathChanged(QString);
+    void on_addressBar_returnPressed();
 };
 
 #endif // MAINWINDOW_H

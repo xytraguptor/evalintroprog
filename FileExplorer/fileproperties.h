@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "QFileSystemModel"
 #include "QAbstractButton"
+#include "QLabel"
+#include "QMovie"
 
 namespace Ui {
 class FileProperties;

@@ -20,9 +20,9 @@ SearchForm::SearchForm(QWidget *parent) :
     ui->cbDepth->addItem(tr("6 levels"), 6);
     ui->cbDepth->addItem(tr("7 levels"), 7);
     ui->cbDepth->addItem(tr("8 levels"), 8);
-    
+
     ui->dockWidget->hide();
-    
+
     SearchForm::enableButtons(false);
 }
 
@@ -48,7 +48,7 @@ void SearchForm::on_btnCancel_pressed()
 void SearchForm::on_btnStartSearch_released()
 {
     ui->dockWidget->show();
-    
+
     QString searchQuery = ui->txtSearchFor->text();
     QString searchPath = ui->txtSearchIn->text();
     QString searchText = ui->txtFindText->text();
@@ -56,9 +56,9 @@ void SearchForm::on_btnStartSearch_released()
     bool isCaseSensitive = ui->chkCaseSensitive->checkState();
     bool showLineNumbers = ui->chkCaseSensitive->checkState();
     bool showFilePath = ui->chkCaseSensitive->checkState();
-    
+
     QFileSystemModel *result = QFeXSearch::getFilteredFiles(searchQuery,searchPath,dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
     ui->listView->setModel(result);
     //QFileSystemModel result = QFeXSearch::getFilteredFiles(searchQuery,searchPath,dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
-    
+
 }
