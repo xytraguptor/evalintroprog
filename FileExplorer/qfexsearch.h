@@ -6,6 +6,8 @@
 #include "qfexpath.h"
 #include <QObject>
 #include <QDialog>
+#include "QTextStream"
+#include <io.h>
 
 namespace QFeX {
 class QFeXSearch;
@@ -20,7 +22,7 @@ class QFeXSearch : public QObject
 public:
 
     explicit QFeXSearch();
-    QFeXSearch(QString &_searchQuery, QString &searchPath, int &dirDepth, QString &searchText, bool &isCaseSensitive, bool &showLineNumbers, bool &showFilePath);
+    QFeXSearch(QString &_searchQuery, QString &searchPath, int &dirDepth, QString &searchText, bool &isCaseSensitive, bool &showLineNumbers, bool &showFilePath, bool &_isTextCaseSensitive);
     //
     QStringList getFilteredFiles();
 
@@ -45,6 +47,9 @@ public:
     void setShowLineNumbers(bool showLineNumbers) {_showLineNumbers = showLineNumbers;}
     bool ShowLineNumbers() const { return _showLineNumbers; }
 
+    void setIsTextCaseSensitive(bool isTextCaseSensitive) {_isTextCaseSensitive = isTextCaseSensitive;}
+    bool IsTextCaseSensitive() const { return _isTextCaseSensitive; }
+
     //~QFeXSearch();
 private:
     QString _searchQuery;
@@ -52,10 +57,12 @@ private:
     int _dirDepth;
     QString _searchText;
     bool _isCaseSensitive;
+    bool _isTextCaseSensitive;
     bool _showLineNumbers;
     bool _showFilePath;
     QStringList *_result;
     void searchFiles(QString query, QString path, int depth, QStringList*results);
+    int QFeXSearch::searchInFile(QString filePath, QString searchString);
 };
 
 #endif // QFEXSEARCH_H

@@ -69,10 +69,11 @@ void SearchForm::on_btnStartSearch_released()
     bool isCaseSensitive = ui->chkCaseSensitive->checkState();
     bool showLineNumbers = ui->chkCaseSensitive->checkState();
     bool showFilePath = ui->chkCaseSensitive->checkState();
+    bool isTextCaseSensitive = ui->chkTextCaseSensitive->checkState();
 
 
     //QFeXSearch *search = new QFeXSearch;
-    QFeXSearch *search = new QFeXSearch(searchQuery, searchPath, dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath);
+    QFeXSearch *search = new QFeXSearch(searchQuery, searchPath, dirDepth,searchText,isCaseSensitive,showLineNumbers,showFilePath,isTextCaseSensitive);
     QStringList result = search->getFilteredFiles();
     listViewModel->setStringList(result);
 
